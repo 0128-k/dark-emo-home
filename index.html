@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="深渊暗黑霸王龙の黑色结界 · 古早非主流暗黑个人主页">
+<title>╰☆╮ 深渊暗黑霸王龙の黑色结界 ╭☆╯</title>
+<style>
+/* ============================================================
+   0. 颜色 / 字体 / 尺寸变量
+   ============================================================ */
+:root{
+  --c-black:#000000;
+  --c-char:#0a080b;
+  --c-char2:#120f14;
+  --c-ink:#1b151d;
+  --c-red:#8b0000;
+  --c-red2:#c21a2c;
+  --c-blood:#5b0a14;
+  --c-purple:#2b1233;
+  --c-purple2:#4a1c55;
+  --c-grey:#b8b2bb;
+  --c-grey2:#736d78;
+  --c-white:#e9e6ec;
+  --c-acid:#a6ff3d;
+  --c-cold:#cdf3ff;
+  --c-line:#3b2f3e;
+  --c-dash:#63293c;
+  --f-cn:"SimSun","宋体","Noto Serif CJK SC","Source Han Serif SC",serif;
+  --f-hei:"SimHei","黑体","Microsoft YaHei",sans-serif;
+  --f-mono:"Courier New",Consolas,"Lucida Console",monospace;
+  --w:880px;
+}
+
+/* ============================================================
+   1. Reset
+   ============================================================ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--c-black);
+  color:var(--c-grey);
+  font-family:var(--f-cn);
+  font-size:14px;
+  line-height:1.75;
+  overflow-x:hidden;
+  cursor:crosshair;
+}
+a{color:var(--c-grey);text-decoration:none}
+button,input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+img,svg{display:block;max-width:100%}
+::selection{background:var(--c-red);color:var(--c-white)}
+:focus-visible{outline:2px dashed var(--c-acid);outline-offset:3px}
+
+/* ============================================================
+   2. 背景层：网格 / 扫描线 / 噪点 / 暗纹 / 暗角
+   ============================================================ */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+.bg-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(120,90,130,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(120,90,130,.055) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+.bg-damask{
+  position:absolute;inset:0;opacity:.5;
+  background-image:radial-gradient(circle at 12% 20%,rgba(90,20,40,.16) 0 2px,transparent 3px),
+                   radial-gradient(circle at 78% 65%,rgba(60,20,80,.14) 0 2px,transparent 3px);
+  background-size:74px 74px,96px 96px;
+}
+.bg-scan{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.28) 2px 4px);
+  opacity:.55;
+}
+.bg-noise{
+  position:absolute;inset:0;opacity:.075;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.bg-vignette{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.75) 100%);
+}
+#fx{position:fixed;inset:0;z-index:120;pointer-events:none}
+
+/* ============================================================
+   3. 通用复古装饰：破损框 / 胶带 / 划痕 / 星星 / 锁链
+   ============================================================ */
+.wrap{
+  position:relative;z-index:1;
+  width:min(var(--w),94vw);
+  margin:22px auto 40px;
+  padding:10px;
+  background:var(--c-char);
+  border:4px solid var(--c-line);
+  border-image:repeating-linear-gradient(45deg,var(--c-line) 0 5px,#000 5px 10px) 4;
+  box-shadow:0 0 0 1px #000,0 0 60px rgba(90,10,30,.35),10px 10px 0 rgba(0,0,0,.9);
+}
+.wrap-inner{padding:8px;border:1px dashed var(--c-line)}
+
+.box{
+  position:relative;
+  margin-bottom:14px;
+  padding:13px 15px;
+  background:linear-gradient(160deg,var(--c-char2),var(--c-char));
+  border:1px dashed var(--c-line);
+  box-shadow:4px 4px 0 rgba(139,0,0,.22),inset 0 0 34px rgba(43,18,51,.28);
+}
+.box::before{
+  content:"";position:absolute;inset:3px;
+  border:1px solid rgba(233,230,236,.045);pointer-events:none;
+}
+/* 右下角被撕掉的缺口 */
+.box::after{
+  content:"";position:absolute;right:-1px;bottom:-1px;
+  width:22px;height:22px;background:var(--c-char);
+  border-left:1px dashed var(--c-line);border-top:1px dashed var(--c-line);
+  clip-path:polygon(100% 0,100% 100%,0 100%);
+}
+.box-t{
+  margin:0 0 10px;padding:0 0 6px;
+  font-family:var(--f-mono);font-size:13px;letter-spacing:2px;
+  color:var(--c-white);
+  border-bottom:1px dashed var(--c-dash);
+  text-shadow:1px 1px 0 var(--c-red);
+}
+.box-t em{font-style:normal;color:var(--c-red2)}
+.tape{
+  position:absolute;top:-11px;left:26px;
+  width:92px;height:22px;transform:rotate(-7deg);
+  background:rgba(200,194,205,.16);
+  border-left:1px dashed rgba(255,255,255,.18);
+  border-right:1px dashed rgba(255,255,255,.18);
+  box-shadow:0 1px 0 rgba(0,0,0,.6);pointer-events:none;
+}
+.tape.r{left:auto;right:22px;transform:rotate(6deg)}
+.scratch{
+  position:absolute;inset:0;pointer-events:none;opacity:.13;mix-blend-mode:screen;
+  background:repeating-linear-gradient(112deg,transparent 0 38px,rgba(233,230,236,.55) 38px 39px,transparent 39px 96px);
+}
+.spider{position:absolute;font-size:54px;opacity:.12;pointer-events:none;user-select:none}
+.spider.a{top:-16px;right:-10px;transform:rotate(18deg)}
+.spider.b{bottom:-18px;left:-12px;transform:rotate(-28deg);font-size:42px}
+.stars{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.stars i{position:absolute;color:var(--c-cold);font-style:normal;font-size:12px;opacity:.6;animation:twinkle 4.5s ease-in-out infinite}
+.chain{
+  text-align:center;color:var(--c-line);font-family:var(--f-mono);
+  letter-spacing:3px;font-size:12px;margin:6px 0 12px;
+  text-shadow:0 0 6px rgba(162,255,61,.18);
+}
+.blink-slow{animation:blink 2.8s ease-in-out infinite}
+.acid{color:var(--c-acid)}
+.cold{color:var(--c-cold)}
+.red{color:var(--c-red2)}
+.dim{color:var(--c-grey2)}
+.mono{font-family:var(--f-mono)}
+.center{text-align:center}
+.tiny{font-size:12px}
+
+/* ============================================================
+   4. 开场：血契封印弹窗
+   ============================================================ */
+#gate{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  padding:18px;overflow:auto;
+  background:radial-gradient(ellipse at center,rgba(30,6,14,.97),rgba(0,0,0,.985));
+}
+#gate::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,transparent 0 3px,rgba(0,0,0,.4) 3px 5px);
+}
+.gate-box{
+  position:relative;width:min(520px,94vw);
+  padding:26px 24px 22px;text-align:center;
+  background:linear-gradient(#120b10,#080608);
+  border:2px dashed var(--c-red);
+  box-shadow:0 0 0 6px #000,0 0 60px rgba(139,0,0,.55),inset 0 0 50px rgba(91,10,20,.4);
+}
+.gate-box .skull{font-size:46px;line-height:1;filter:drop-shadow(0 0 12px rgba(194,26,44,.7))}
+.gate-warn{
+  display:inline-block;margin:4px 0 10px;padding:2px 12px;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:3px;
+  color:var(--c-acid);border:1px solid var(--c-acid);
+  animation:blink 2.8s ease-in-out infinite;
+}
+.gate-box h1{
+  margin:0 0 12px;font-family:var(--f-hei);font-size:clamp(20px,5vw,30px);
+  letter-spacing:8px;color:var(--c-white);
+  text-shadow:2px 0 var(--c-red2),-2px 0 var(--c-purple2),0 0 18px rgba(194,26,44,.65);
+}
+.gate-box p{margin:6px 0;font-size:13px;color:var(--c-grey)}
+.gate-rune-hint{
+  margin:16px 0 10px!important;padding:8px;border:1px dashed var(--c-line);
+  background:rgba(43,18,51,.35);color:var(--c-white)!important;
+}
+.gate-rune-hint b{color:var(--c-acid);letter-spacing:4px}
+.runes{display:flex;gap:10px;justify-content:center;margin:14px 0 8px;flex-wrap:wrap}
+.rune{
+  width:88px;padding:10px 4px;text-align:center;
+  border:1px solid var(--c-line);background:#0d0910;
+  color:var(--c-grey2);transition:transform .18s,color .18s,border-color .18s,box-shadow .18s;
+}
+.rune .ico{display:block;font-size:28px;line-height:1.3;filter:grayscale(1)}
+.rune .lb{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:2px}
+.rune:hover{transform:translateY(-3px) skewX(-4deg);border-color:var(--c-red2);color:var(--c-white)}
+.rune.lit{
+  border-color:var(--c-acid);color:var(--c-acid);
+  box-shadow:0 0 16px rgba(166,255,61,.35),inset 0 0 14px rgba(166,255,61,.12);
+}
+.rune.lit .ico{filter:none}
+.gate-progress{font-family:var(--f-mono);font-size:12px;letter-spacing:1px;color:var(--c-grey2)}
+#gateProgress{color:var(--c-red2);font-size:15px}
+#gateMsg{min-height:22px;color:var(--c-cold)!important;font-size:12px!important}
+.enter-btn{
+  display:block;width:100%;margin:12px 0 10px;padding:11px;
+  font-family:var(--f-hei);font-size:16px;letter-spacing:6px;
+  color:var(--c-white);border:1px solid var(--c-red2);
+  background:linear-gradient(var(--c-blood),#2a050c);
+  text-shadow:0 0 8px rgba(255,255,255,.4);
+  transition:box-shadow .2s,transform .2s,filter .2s;
+}
+.enter-btn:disabled{filter:grayscale(1) brightness(.5);cursor:not-allowed;border-color:var(--c-line)}
+.enter-btn:not(:disabled):hover{box-shadow:0 0 24px rgba(194,26,44,.8);transform:scale(1.01)}
+.gate-foot{font-size:11px!important;color:var(--c-grey2)!important}
+#gate.error .gate-box{animation:shake .4s}
+#gate.breaking .gate-box{animation:shatter .8s forwards}
+#gate.breaking::after{
+  content:"";position:absolute;inset:0;background:var(--c-white);
+  animation:flashout .8s forwards;pointer-events:none;
+}
+
+/* 未解锁时主页被封印 */
+#site{opacity:0;filter:blur(7px) grayscale(1);transform:scale(.985);transition:opacity .7s,filter .7s,transform .7s}
+#site.unlocked{opacity:1;filter:none;transform:none}
+
+/* ============================================================
+   5. 页头：跑马灯 / 标题 / 导航
+   ============================================================ */
+.marquee{
+  overflow:hidden;white-space:nowrap;margin-bottom:12px;
+  border:1px dashed var(--c-dash);background:#0d0509;
+  padding:5px 0;font-family:var(--f-mono);font-size:12px;color:var(--c-acid);
+}
+.marquee span{display:inline-block;white-space:nowrap;animation:mq 26s linear infinite}
+.marquee b{color:var(--c-red2);font-weight:normal}
+header{position:relative;text-align:center;padding:6px 0 4px}
+.glitch{
+  position:relative;display:inline-block;
+  font-family:var(--f-hei);font-weight:bold;
+  font-size:clamp(26px,6.4vw,48px);letter-spacing:clamp(2px,1.4vw,10px);
+  color:var(--c-white);line-height:1.35;
+  text-shadow:3px 2px 0 var(--c-red),-3px -1px 0 var(--c-purple2),0 0 22px rgba(194,26,44,.5);
+}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;left:0;top:0;width:100%;
+  pointer-events:none;opacity:0;
+}
+.glitch::before{color:var(--c-red2);clip-path:inset(0 0 58% 0);animation:glitchA 7s infinite}
+.glitch::after{color:var(--c-cold);clip-path:inset(58% 0 0 0);animation:glitchB 9s infinite}
+.sad{
+  margin:8px 0 4px;font-size:13px;color:var(--c-grey2);letter-spacing:1px;
+}
+.sad .ka{color:var(--c-red2)}
+.type-line{
+  display:inline-block;min-height:22px;font-family:var(--f-mono);
+  font-size:13px;color:var(--c-cold);letter-spacing:1px;
+}
+.caret{display:inline-block;width:8px;height:14px;background:var(--c-acid);vertical-align:-2px;animation:caret 1s step-end infinite}
+nav{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:2px;
+  margin:14px 0 6px;padding:7px 4px;
+  border-top:1px dashed var(--c-line);border-bottom:1px dashed var(--c-line);
+  background:repeating-linear-gradient(90deg,transparent 0 16px,rgba(139,0,0,.08) 16px 17px);
+}
+nav a{
+  position:relative;padding:5px 13px;font-family:var(--f-mono);font-size:13px;
+  letter-spacing:1px;color:var(--c-grey);border:1px solid transparent;
+}
+nav a::before{content:"✞";position:absolute;left:1px;opacity:0;color:var(--c-acid)}
+nav a:hover,nav a:focus-visible{
+  color:var(--c-white);border-color:var(--c-red);
+  text-shadow:2px 0 var(--c-red2),-2px 0 var(--c-cold);
+  transform:skewX(-6deg);
+}
+nav a:hover::before{opacity:1}
+.hr-bats{text-align:center;color:var(--c-line);letter-spacing:12px;font-size:13px;margin:2px 0 14px}
+
+/* ============================================================
+   6. 双栏表格感布局
+   ============================================================ */
+.layout{display:grid;grid-template-columns:246px 1fr;gap:14px;align-items:start}
+.col-left,.col-main{min-width:0}
+
+/* ---------- 头像 / 身份 ---------- */
+.avatar-box{text-align:center}
+.avatar-frame{
+  position:relative;width:132px;height:132px;margin:2px auto 10px;
+  border:2px solid var(--c-line);background:radial-gradient(circle,#1a0d18,#050405);
+  box-shadow:0 0 0 4px #000,inset 0 0 26px rgba(139,0,0,.45);
+}
+.avatar-frame svg{width:100%;height:100%}
+.avatar-frame .rose{position:absolute;right:-14px;bottom:-10px;font-size:26px;filter:drop-shadow(0 0 6px var(--c-red))}
+.avatar-frame .cross{position:absolute;left:-12px;top:-12px;font-size:22px;color:var(--c-grey2)}
+.nick{font-family:var(--f-hei);font-size:18px;letter-spacing:2px;color:var(--c-white);text-shadow:2px 2px 0 var(--c-red)}
+.sign{font-size:12px;color:var(--c-grey2);margin:4px 0 8px}
+.online{
+  display:inline-block;padding:2px 9px;font-family:var(--f-mono);font-size:11px;
+  color:var(--c-acid);border:1px solid rgba(166,255,61,.4);
+}
+.online i{display:inline-block;width:6px;height:6px;background:var(--c-acid);margin-right:5px;animation:blink 2.8s infinite}
+
+/* ---------- 信息表 ---------- */
+.info{width:100%;border-collapse:collapse;font-size:13px}
+.info th,.info td{border:1px dashed var(--c-line);padding:5px 7px;text-align:left;vertical-align:top}
+.info th{width:74px;color:var(--c-red2);font-family:var(--f-mono);font-weight:normal;font-size:12px;background:rgba(139,0,0,.08)}
+.info td{color:var(--c-white)}
+.info tr:nth-child(even) td{background:rgba(43,18,51,.16)}
+
+/* ---------- 标签 ---------- */
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  padding:2px 8px;font-size:12px;color:var(--c-grey);
+  border:1px dotted var(--c-line);background:#0c0910;
+  transition:color .18s,border-color .18s,transform .18s;
+}
+.tag:nth-child(3n){color:var(--c-cold)}
+.tag:nth-child(4n){color:var(--c-red2)}
+.tag:hover{color:var(--c-acid);border-color:var(--c-acid);transform:rotate(-3deg)}
+
+/* ---------- 友情链接 ---------- */
+.links{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.linkbtn{
+  text-align:left;padding:5px 8px;font-size:12px;
+  border:1px dashed var(--c-line);color:var(--c-cold);background:#0b0810;
+  transition:background .18s,color .18s;
+}
+.linkbtn::before{content:"▸ ";color:var(--c-red2)}
+.linkbtn:hover{background:var(--c-blood);color:var(--c-white)}
+
+/* ---------- 访客计数器 ---------- */
+.counter{text-align:center;padding:6px 0 2px}
+.digits{display:flex;justify-content:center;gap:4px;margin:6px 0}
+.digits span{
+  display:inline-block;width:24px;padding:3px 0;font-family:var(--f-mono);font-size:18px;
+  color:var(--c-acid);background:#050405;border:1px solid var(--c-line);
+  box-shadow:inset 0 -8px 8px rgba(139,0,0,.25),0 0 8px rgba(166,255,61,.12);
+  text-shadow:0 0 8px rgba(166,255,61,.6);
+}
+
+/* ---------- 自我介绍 ---------- */
+.intro-text{min-height:96px;font-size:14px;line-height:2;color:var(--c-white);white-space:pre-wrap}
+.whisper{
+  margin:12px 0 2px;padding:9px 12px;
+  border-left:3px solid var(--c-red);border-right:1px dashed var(--c-line);
+  background:linear-gradient(90deg,rgba(139,0,0,.14),transparent);
+  font-size:13px;color:var(--c-grey);letter-spacing:1px;font-style:italic;
+}
+.whisper::before{content:"「 ";color:var(--c-line)}
+.whisper::after{content:" 」";color:var(--c-line)}
+
+/* ---------- 翻转卡：技能 / 团 ---------- */
+.flips{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.flip{
+  position:relative;width:100%;height:118px;padding:0;perspective:700px;
+  border:0;background:transparent;text-align:left;
+}
+.flip-inner{
+  display:block;position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.8,.2,1);
+}
+.flip.is-flipped .flip-inner{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;padding:8px;text-align:center;
+  border:1px dashed var(--c-dash);
+  background:linear-gradient(150deg,#1d1220,#0a070c);
+  box-shadow:inset 0 0 20px rgba(43,18,51,.45),3px 3px 0 rgba(0,0,0,.75),0 0 0 1px rgba(139,0,0,.22);
+}
+.face::before{
+  content:"✦";position:absolute;top:2px;right:5px;
+  font-size:9px;color:var(--c-red2);opacity:.75;
+}
+.face-front .ic{font-size:24px;filter:drop-shadow(0 0 6px rgba(194,26,44,.6))}
+.face-front .nm{font-family:var(--f-hei);font-size:16px;letter-spacing:3px;color:var(--c-white);white-space:nowrap}
+.face-front .hint{font-size:11px;color:var(--c-grey2);white-space:nowrap}
+.face-front:hover{border-color:var(--c-red2)}
+.face-back{transform:rotateY(180deg);border-color:var(--c-red);background:linear-gradient(150deg,#2a0810,#0a0508)}
+.face-back .p1{font-family:var(--f-mono);font-size:19px;color:var(--c-acid);text-shadow:0 0 8px rgba(166,255,61,.5);white-space:nowrap}
+.face-back .p2{font-family:var(--f-mono);font-size:13px;color:var(--c-cold);white-space:nowrap}
+.face-back .bk{font-size:11px;color:var(--c-grey2);white-space:nowrap}
+.night-note{
+  margin:11px 0 0;padding:7px 10px;font-family:var(--f-mono);font-size:12px;
+  border:1px dotted var(--c-dash);color:var(--c-red2);background:rgba(91,10,20,.16);
+}
+.flip-wide{width:100%;max-width:320px;height:96px}
+.flip-wide .face-back .p1{font-size:14px;color:var(--c-cold)}
+.flip-wide .face-back .p2{font-size:12px;color:var(--c-white)}
+
+/* ---------- 须知 / 联系 ---------- */
+.rules{list-style:none;margin:0;padding:0}
+.rules li{padding:5px 0;border-bottom:1px dotted var(--c-line);font-size:13px;color:var(--c-white)}
+.rules li::before{content:"☠ ";color:var(--c-red2);font-family:var(--f-mono)}
+.rules li:last-child{border-bottom:0}
+.contacts{display:grid;gap:7px}
+.contact{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:7px 9px;border:1px dashed var(--c-line);background:#0b0810;
+}
+.contact .k{font-family:var(--f-mono);font-size:12px;color:var(--c-red2);width:52px}
+.contact .v{font-family:var(--f-mono);font-size:13px;color:var(--c-white);word-break:break-all;flex:1}
+.lockbtn{font-family:var(--f-mono);font-size:13px;color:var(--c-grey2);text-align:left;flex:1;padding:0}
+.lockbtn:hover{color:var(--c-acid)}
+.lockbtn.shake{animation:shake .4s;color:var(--c-red2)}
+.minibtn{
+  padding:2px 8px;font-family:var(--f-mono);font-size:11px;
+  border:1px solid var(--c-line);color:var(--c-cold);white-space:nowrap;
+}
+.minibtn:hover{border-color:var(--c-acid);color:var(--c-acid)}
+
+/* ---------- 留言板 ---------- */
+.gb-form{display:grid;gap:7px;margin-bottom:12px}
+.gb-row{display:flex;gap:7px;flex-wrap:wrap}
+.gb-form input,.gb-form textarea{
+  width:100%;padding:7px 9px;background:#050405;color:var(--c-white);
+  border:1px dashed var(--c-line);border-radius:0;outline:none;
+}
+.gb-form input:focus,.gb-form textarea:focus{border-color:var(--c-acid);box-shadow:0 0 8px rgba(166,255,61,.2)}
+.gb-form textarea{min-height:70px;resize:vertical}
+.gb-form input::placeholder,.gb-form textarea::placeholder{color:var(--c-grey2)}
+.gb-submit{
+  padding:7px 18px;font-family:var(--f-hei);letter-spacing:4px;font-size:14px;
+  color:var(--c-white);border:1px solid var(--c-red2);
+  background:linear-gradient(var(--c-blood),#26040b);
+}
+.gb-submit:hover{box-shadow:0 0 18px rgba(194,26,44,.7)}
+.emo-row{display:flex;gap:5px;flex-wrap:wrap}
+.emo{padding:2px 7px;border:1px dotted var(--c-line);font-size:12px;color:var(--c-grey2)}
+.emo:hover{color:var(--c-acid);border-color:var(--c-acid)}
+#gbList{list-style:none;margin:0;padding:0;max-height:280px;overflow:auto}
+#gbList li{
+  padding:8px 9px;margin-bottom:7px;
+  border:1px dotted var(--c-line);border-left:3px solid var(--c-red);
+  background:rgba(20,15,22,.7);font-size:13px;
+}
+#gbList .who{font-family:var(--f-mono);font-size:12px;color:var(--c-acid)}
+#gbList .time{font-family:var(--f-mono);font-size:11px;color:var(--c-grey2);float:right}
+#gbList .txt{color:var(--c-white);white-space:pre-wrap;word-break:break-word;margin-top:3px}
+
+/* ============================================================
+   7. 页脚 / 固定工具条
+   ============================================================ */
+footer{
+  margin-top:6px;padding:14px 8px 8px;text-align:center;
+  border-top:1px dashed var(--c-line);font-size:12px;color:var(--c-grey2);
+}
+footer .big{font-family:var(--f-mono);letter-spacing:1px;color:var(--c-white)}
+footer .stat{margin:8px 0;font-family:var(--f-mono);font-size:12px}
+footer .stat b{color:var(--c-acid)}
+footer .copy{line-height:2}
+.tools{
+  position:fixed;right:12px;bottom:12px;z-index:90;
+  display:flex;flex-direction:column;gap:6px;
+}
+.tool{
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-mono);font-size:16px;color:var(--c-grey);
+  border:1px solid var(--c-line);background:rgba(8,6,10,.92);
+  box-shadow:3px 3px 0 rgba(139,0,0,.3);
+  transition:color .18s,border-color .18s,transform .18s;
+}
+.tool:hover{color:var(--c-acid);border-color:var(--c-acid);transform:translateY(-2px)}
+.tool.on{color:var(--c-acid);border-color:var(--c-acid)}
+.clock{
+  position:fixed;left:12px;bottom:12px;z-index:90;
+  padding:5px 9px;font-family:var(--f-mono);font-size:11px;color:var(--c-grey2);
+  border:1px dashed var(--c-line);background:rgba(8,6,10,.9);
+}
+.clock b{color:var(--c-cold)}
+.toast{
+  position:fixed;left:50%;top:18px;z-index:130;
+  transform:translate(-50%,-24px);opacity:0;visibility:hidden;
+  padding:8px 16px;font-family:var(--f-mono);font-size:12px;
+  color:var(--c-acid);border:1px solid var(--c-acid);background:#0a0508;
+  box-shadow:0 0 20px rgba(166,255,61,.35);
+  transition:transform .3s,opacity .3s,visibility .3s;
+  pointer-events:none;max-width:88vw;text-align:center;
+}
+.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
+
+/* ============================================================
+   8. 关键帧（低频、克制，避免高频闪烁）
+   ============================================================ */
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.42}}
+@keyframes twinkle{0%,100%{opacity:.12;transform:scale(.8)}50%{opacity:.9;transform:scale(1.25)}}
+@keyframes caret{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes glitchA{
+  0%,91%,100%{opacity:0;transform:translate(0)}
+  92%{opacity:.9;transform:translate(-4px,1px)}
+  94%{opacity:.7;transform:translate(3px,-2px)}
+  96%{opacity:.85;transform:translate(-2px,0)}
+}
+@keyframes glitchB{
+  0%,93%,100%{opacity:0;transform:translate(0)}
+  94%{opacity:.8;transform:translate(4px,1px)}
+  96%{opacity:.6;transform:translate(-3px,-1px)}
+  98%{opacity:.8;transform:translate(2px,0)}
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}
+  40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}
+}
+@keyframes shatter{
+  0%{transform:scale(1);filter:none;opacity:1}
+  35%{transform:scale(1.03) skewX(2deg);filter:contrast(2)}
+  100%{transform:scale(1.5) rotate(-3deg);filter:blur(14px) brightness(2);opacity:0}
+}
+@keyframes flashout{0%{opacity:0}30%{opacity:.85}100%{opacity:0}}
+
+/* ============================================================
+   9. 响应式
+   ============================================================ */
+@media (max-width:760px){
+  body{font-size:13px}
+  .wrap{margin:10px auto 26px;padding:6px}
+  .layout{grid-template-columns:1fr;gap:0}
+  .col-left{order:1}.col-main{order:2}
+  .avatar-frame{width:112px;height:112px}
+  .flips{grid-template-columns:repeat(2,1fr)}
+  .flip{height:106px}
+  .glitch{letter-spacing:3px}
+  nav a{padding:5px 9px;font-size:12px}
+  .tools{right:8px;bottom:8px}
+  .tool{width:38px;height:38px}
+  .clock{left:8px;bottom:8px;font-size:10px}
+  .gate-box{padding:20px 14px}
+  .rune{width:74px}
+}
+@media (max-width:380px){
+  .flips{grid-template-columns:1fr 1fr}
+  .rune{width:68px}
+}
+
+/* ============================================================
+   10. 可访问性：尊重减少动效偏好
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .marquee{white-space:normal;overflow:visible}
+  .marquee span{padding-left:0;transform:none!important}
+  .glitch::before,.glitch::after{display:none}
+  .caret{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 背景层 ============ -->
+<div class="bg" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-damask"></div>
+  <div class="bg-scan"></div>
+  <div class="bg-noise"></div>
+  <div class="bg-vignette"></div>
+</div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<!-- ============ 开场：血契封印 ============ -->
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-describedby="gateDesc">
+  <div class="gate-box">
+    <div class="skull" aria-hidden="true">☠</div>
+    <div class="gate-warn">⚠ W A R N I N G ⚠</div>
+    <h1 id="gateTitle">未 授 权 访 问</h1>
+    <p id="gateDesc">你正在试图闯入 <b class="red">深渊暗黑霸王龙</b> 的黑色结界。<br>
+      此地充斥火星文、过期的心碎与凌晨三点的雨声。<br>
+      不治愈、不励志、不提供正能量。</p>
+    <p class="gate-rune-hint">✞ 血 契 仪 式 ✞<br>
+      请按顺序点亮三枚符文以解除封印：<br><b>血 → 骨 → 泪</b></p>
+    <div class="runes" id="runes">
+      <button class="rune" data-rune="血" aria-label="符文：血"><span class="ico" aria-hidden="true">🩸</span><span class="lb">血</span></button>
+      <button class="rune" data-rune="骨" aria-label="符文：骨"><span class="ico" aria-hidden="true">☠</span><span class="lb">骨</span></button>
+      <button class="rune" data-rune="泪" aria-label="符文：泪"><span class="ico" aria-hidden="true">💧</span><span class="lb">泪</span></button>
+    </div>
+    <div class="gate-progress">封 印 解 除 度 &nbsp; <span id="gateProgress">0</span> / 3</div>
+    <p id="gateMsg" aria-live="polite">封印完好。请从「血」开始烙印。</p>
+    <button class="enter-btn" id="enterBtn" disabled>【 进 入 本 站 】</button>
+    <p class="gate-foot">未满 18 岁请在家长陪同下悲伤 · 本站保留起诉退单者的权利</p>
+  </div>
+</div>
+
+<!-- ============ 主页（未解锁时被封印） ============ -->
+<div id="site" aria-hidden="true" inert>
+
+  <div class="wrap"><div class="wrap-inner">
+
+    <!-- 跑马灯公告 -->
+    <div class="marquee" aria-label="站内公告">
+      <span>◆ 欢迎来到涐旳黑色结界 ◆ <b>本站严禁快乐 / 严禁阳光 / 严禁早起</b> ◆ 深夜 11:00–07:00 加价 +52r ◆ 不支持退单，敢退单涐就起诉伱 ◆ 最佳浏览分辨率 1024×768 ◆ 建议用 IE6 打开 ◆ 留言请留真名，别让涐猜 ◆ ◆ 欢迎来到涐旳黑色结界 ◆ <b>本站严禁快乐 / 严禁阳光 / 严禁早起</b> ◆ 深夜 11:00–07:00 加价 +52r ◆ 不支持退单，敢退单涐就起诉伱 ◆ 最佳浏览分辨率 1024×768 ◆ 建议用 IE6 打开 ◆ 留言请留真名，别让涐猜 ◆ </span>
+    </div>
+
+    <!-- 页头 -->
+    <header>
+      <div class="scratch" aria-hidden="true"></div>
+      <div class="stars" aria-hidden="true">
+        <i style="left:6%;top:12%;animation-delay:.2s">✦</i><i style="left:88%;top:22%;animation-delay:1.4s">✧</i>
+        <i style="left:16%;top:76%;animation-delay:2.6s">✧</i><i style="left:76%;top:82%;animation-delay:.9s">✦</i>
+      </div>
+      <div class="tape" aria-hidden="true"></div>
+      <div class="tape r" aria-hidden="true"></div>
+      <h1 class="glitch" id="mainTitle" data-text="深渊暗黑霸王龙" tabindex="-1">深渊暗黑霸王龙</h1>
+      <div class="sad">╭∩╮<span class="ka">(︶︿︶)</span>╭∩╮ &nbsp; 涐旳忧伤、祢永远吥懂 · 眼泪是黑的，因为心已经烧成灰</div>
+      <div class="type-line" id="headerType"><span class="caret" aria-hidden="true"></span></div>
+      <nav aria-label="主导航">
+        <a href="#s-intro">『 首 页 』</a>
+        <a href="#s-intro">『 碎碎念 』</a>
+        <a href="#s-avatar">『 黑相册 』</a>
+        <a href="#s-skill">『 价 目 』</a>
+        <a href="#s-gb">『 留言板 』</a>
+        <a href="#s-links">『 友 链 』</a>
+        <a href="#footer">『 关 于 』</a>
+      </nav>
+      <div class="hr-bats" aria-hidden="true">✞ 🦇 ✞ ⛓ ✞ 🦇 ✞</div>
+    </header>
+
+    <div class="layout">
+
+      <!-- ===== 左栏 ===== -->
+      <aside class="col-left">
+
+        <section class="box avatar-box" id="s-avatar" aria-label="头像与身份">
+          <div class="spider a" aria-hidden="true">🕸</div>
+          <div class="avatar-frame">
+            <span class="cross" aria-hidden="true">✞</span>
+            <span class="rose" aria-hidden="true">🌹</span>
+            <!-- 纯 SVG 骷髅头像占位，无任何外部图片 -->
+            <svg viewBox="0 0 120 120" role="img" aria-label="骷髅头像占位图">
+              <defs><radialGradient id="glow"><stop offset="0" stop-color="#5b0a14" stop-opacity=".8"/><stop offset="1" stop-color="#050405" stop-opacity="0"/></radialGradient></defs>
+              <rect width="120" height="120" fill="url(#glow)"/>
+              <g fill="none" stroke="#b8b2bb" stroke-width="2" stroke-linejoin="round">
+                <path d="M30 54 C30 24 90 24 90 54 C90 70 83 76 77 80 L77 94 L43 94 L43 80 C37 76 30 70 30 54 Z"/>
+                <path d="M43 94 L43 104 M52 94 L52 104 M60 94 L60 104 M68 94 L68 104 M77 94 L77 104"/>
+              </g>
+              <g fill="#8b0000" stroke="#c21a2c" stroke-width="1">
+                <ellipse cx="46" cy="55" rx="9" ry="10"/><ellipse cx="74" cy="55" rx="9" ry="10"/>
+              </g>
+              <path d="M60 66 L55 76 L65 76 Z" fill="#1b151d" stroke="#736d78"/>
+              <g stroke="#736d78" stroke-width="1.4">
+                <path d="M48 82 V92 M56 82 V92 M64 82 V92 M72 82 V92"/>
+              </g>
+              <text x="60" y="18" fill="#a6ff3d" font-size="9" font-family="monospace" text-anchor="middle">2004 · EM0</text>
+            </svg>
+          </div>
+          <div class="nick">深渊暗黑霸王龙</div>
+          <div class="sign">✞ 别爱我，没结果，涐只是深渊里一只霸王龙 ✞</div>
+          <div class="online"><i></i><span id="onlineState">深夜出没中</span></div>
+        </section>
+
+        <section class="box" aria-label="个人信息">
+          <h2 class="box-t">▌<em>個</em> 人 档 案 &nbsp;<span class="dim tiny mono">PROFILE.DAT</span></h2>
+          <table class="info">
+            <tbody>
+              <tr><th>姓名</th><td>深渊暗黑霸王龙</td></tr>
+              <tr><th>年龄</th><td>你猜</td></tr>
+              <tr><th>星座</th><td>你再猜</td></tr>
+              <tr><th>属性</th><td>你还猜</td></tr>
+              <tr><th>MBTI</th><td>你继续猜</td></tr>
+              <tr><th>情感状况</th><td class="red">有对象有情人有金主</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="box counter" aria-label="访客计数器">
+          <h2 class="box-t center">▌<em>访</em> 客 计 数 器 ▐</h2>
+          <div class="digits" id="digitBox" aria-label="访客总数"></div>
+          <div class="tiny dim">你 是 第 <span class="acid" id="visitNo">0</span> 位 闯 入 者</div>
+          <div class="tiny dim">今 日 <span class="cold" id="todayNo">0</span> 人 · 在 线 <span class="acid" id="onlineNo">1</span> 人</div>
+          <div class="chain" aria-hidden="true">⛓ ⛓ ⛓ ⛓ ⛓</div>
+        </section>
+
+        <section class="box" aria-label="兴趣标签">
+          <h2 class="box-t">▌<em>嗜</em> 好 标 签 &nbsp;<span class="dim tiny mono">TAGS</span></h2>
+          <div class="tags">
+            <span class="tag">深夜</span><span class="tag">黑金属</span><span class="tag">玫瑰</span>
+            <span class="tag">骷髅</span><span class="tag">火星文</span><span class="tag">雨声</span>
+            <span class="tag">失眠</span><span class="tag">哥特</span><span class="tag">旧网页</span>
+            <span class="tag">冰</span><span class="tag">打字机</span><span class="tag">非主流</span>
+          </div>
+        </section>
+
+        <section class="box" id="s-links" aria-label="友情链接">
+          <h2 class="box-t">▌<em>友</em> 情 链 接 &nbsp;<span class="dim tiny mono">LINKS</span></h2>
+          <div class="links">
+            <button class="linkbtn" data-dead="殇·涐のBlog">殇·涐のBlog</button>
+            <button class="linkbtn" data-dead="暗夜家族总坛">暗夜家族总坛</button>
+            <button class="linkbtn" data-dead="QQ空间互踩联盟">QQ空间互踩联盟</button>
+            <button class="linkbtn" data-dead="非主流素材站">非主流素材站</button>
+          </div>
+          <p class="tiny dim center" style="margin:8px 0 0">↖ 点一下互踩，别偷偷跑掉 ↗</p>
+        </section>
+
+      </aside>
+
+      <!-- ===== 右栏 ===== -->
+      <main class="col-main">
+
+        <section class="box" id="s-intro" aria-label="自我介绍">
+          <div class="spider a" aria-hidden="true">🕸</div>
+          <div class="spider b" aria-hidden="true">🕸</div>
+          <h2 class="box-t">▌<em>关</em> 于 涐 &nbsp;<span class="dim tiny mono">ABOUT.TXT / 打字中...</span></h2>
+          <div class="intro-text" id="introText" aria-live="polite"></div>
+          <blockquote class="whisper">山脚下的人总是对山顶上的神有着恶意</blockquote>
+          <p class="tiny dim center" style="margin:10px 0 0">✧ ┄ ┄ ┄ 以 下 内 容 可 能 引 起 舒 适 ┄ ┄ ┄ ✧</p>
+        </section>
+
+        <section class="box" id="s-skill" aria-label="技能价目表">
+          <div class="tape" aria-hidden="true"></div>
+          <h2 class="box-t">▌<em>技</em> 能 价 目 &nbsp;<span class="dim tiny mono">CLICK TO FLIP ↺</span></h2>
+          <p class="tiny dim" style="margin:0 0 10px">↓ 点击技能卡，价格会反转出来 ↓</p>
+          <div class="flips">
+            <button class="flip" aria-pressed="false" aria-label="纯连，点击翻转查看价格">
+              <span class="flip-inner">
+                <span class="face face-front"><span class="ic" aria-hidden="true">⛓</span><span class="nm">纯 连</span><span class="hint">点击反转 ↺</span></span>
+                <span class="face face-back"><span class="p1">99 / 1h</span><span class="p2">52 / 0.5h</span><span class="bk">↺ 再点收回</span></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" aria-label="纯文，点击翻转查看价格">
+              <span class="flip-inner">
+                <span class="face face-front"><span class="ic" aria-hidden="true">✒</span><span class="nm">纯 文</span><span class="hint">点击反转 ↺</span></span>
+                <span class="face face-back"><span class="p1">99 / 1h</span><span class="p2">52 / 0.5h</span><span class="bk">↺ 再点收回</span></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" aria-label="树洞，点击翻转查看价格">
+              <span class="flip-inner">
+                <span class="face face-front"><span class="ic" aria-hidden="true">🕳</span><span class="nm">树 洞</span><span class="hint">点击反转 ↺</span></span>
+                <span class="face face-back"><span class="p1">99 / 1h</span><span class="p2">52 / 0.5h</span><span class="bk">↺ 再点收回</span></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" aria-label="游戏，点击翻转查看价格">
+              <span class="flip-inner">
+                <span class="face face-front"><span class="ic" aria-hidden="true">🎮</span><span class="nm">游 戏</span><span class="hint">点击反转 ↺</span></span>
+                <span class="face face-back"><span class="p1">99 / 1h</span><span class="p2">52 / 0.5h</span><span class="bk">↺ 再点收回</span></span>
+              </span>
+            </button>
+          </div>
+          <div class="night-note blink-slow">☾ 凌晨 11:00-07:00 &nbsp;+52r &nbsp;（夜间出没费，不接受议价）</div>
+        </section>
+
+        <section class="box" aria-label="所属团">
+          <h2 class="box-t">▌<em>所</em> 属 团 &nbsp;<span class="dim tiny mono">CLICK TO REVEAL</span></h2>
+          <button class="flip flip-wide" aria-pressed="false" aria-label="所属团：冰之暗，点击翻转查看身份">
+            <span class="flip-inner">
+              <span class="face face-front"><span class="ic" aria-hidden="true">❄</span><span class="nm">冰 之 暗</span><span class="hint">点击查看团内身份 ↺</span></span>
+              <span class="face face-back"><span class="p1">身 份 · 寒渊执政官</span><span class="p2">初代守门人 / 编号 000</span><span class="bk">↺ 再点收回</span></span>
+            </span>
+          </button>
+        </section>
+
+        <section class="box" aria-label="下单须知">
+          <h2 class="box-t">▌<em>下</em> 单 须 知 &nbsp;<span class="dim tiny mono">READ BEFORE ORDER</span></h2>
+          <ul class="rules">
+            <li>进单老板自己找话题</li>
+            <li>不支持退单</li>
+            <li>敢退我单我就起诉你</li>
+          </ul>
+        </section>
+
+        <section class="box" id="s-gb" aria-label="留言板">
+          <div class="tape r" aria-hidden="true"></div>
+          <h2 class="box-t">▌<em>留</em> 言 板 &nbsp;<span class="dim tiny mono">GUESTBOOK / 假表单</span></h2>
+          <form class="gb-form" id="gbForm">
+            <div class="gb-row">
+              <input id="gbName" type="text" maxlength="18" placeholder="你的名字（不留就叫「 anonymous 」）" aria-label="你的名字">
+            </div>
+            <textarea id="gbText" maxlength="300" placeholder="把想说的刻在这里……禁止阳光、禁止励志、禁止快乐" aria-label="留言内容"></textarea>
+            <div class="emo-row" aria-label="快捷颜文字">
+              <button type="button" class="emo" data-emo="(｡•́︿•̀｡)">(｡•́︿•̀｡)</button>
+              <button type="button" class="emo" data-emo="T_T">T_T</button>
+              <button type="button" class="emo" data-emo="✞">✞</button>
+              <button type="button" class="emo" data-emo="🌹">🌹</button>
+              <button type="button" class="emo" data-emo="☠">☠</button>
+              <button type="button" class="emo" data-emo="╰☆╮">╰☆╮</button>
+            </div>
+            <div><button class="gb-submit" type="submit">【 刻 下 血 书 】</button></div>
+          </form>
+          <div class="chain" aria-hidden="true">✞ ┄ ┄ 以 下 是 留 下 的 痕 迹 ┄ ┄ ✞</div>
+          <ul id="gbList" aria-live="polite"></ul>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- 联系方式：全宽横条，位于内容区最下方 -->
+    <section class="box" aria-label="联系方式">
+      <div class="spider b" aria-hidden="true">🕸</div>
+      <h2 class="box-t">▌<em>联</em> 系 方 式 &nbsp;<span class="dim tiny mono">CONTACT / 最 下 方 · 先下单后解锁</span></h2>
+      <div class="contacts">
+        <div class="contact">
+          <span class="k">微信</span><span class="v">Boffett00I</span>
+          <button class="minibtn" id="copyWx">复 制</button>
+        </div>
+        <div class="contact">
+          <span class="k">qq</span>
+          <button class="lockbtn" data-lock="qq">***待解锁</button>
+          <span class="dim tiny mono">🔒</span>
+        </div>
+        <div class="contact">
+          <span class="k">邮箱</span>
+          <button class="lockbtn" data-lock="mail">***待解锁</button>
+          <span class="dim tiny mono">🔒</span>
+        </div>
+      </div>
+      <p class="tiny dim center" style="margin:9px 0 0">✞ 先下单，后解锁 · 冰封的内容不会自己融化 ✞</p>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="footer">
+      <div class="big">╰☆╮ 谢 谢 你 愿 意 停 留 在 这 片 黑 暗 里 ╭☆╯</div>
+      <div class="stat">你是第 <b id="footVisit">0</b> 位闯入者 · 今日 <b id="footToday">0</b> 人 · 当前在线 <b id="footOnline">1</b> 人 · 北京时间 <b id="footClock">--:--:--</b></div>
+      <div class="copy">
+        © 2004–2026 深渊暗黑霸王龙 · All Rights Reserved · 本站由心碎驱动<br>
+        暗ICP备 000000 号 ｜ 最佳浏览 1024×768 ｜ 建议使用 IE6 ｜ 禁止转载涐旳悲伤<br>
+        <span class="blink-slow red">本站不治愈任何人，也不对任何人的失眠负责</span>
+      </div>
+      <div style="margin-top:10px"><button class="minibtn" id="reselBtn">↺ 重新上锁（重看开场）</button></div>
+    </footer>
+
+  </div></div>
+</div>
+
+<!-- ============ 固定工具条 ============ -->
+<div class="clock" aria-hidden="true">☾ <b id="liveClock">--:--:--</b> · CST</div>
+<div class="tools">
+  <button class="tool" id="musicBtn" aria-pressed="false" title="音乐开关（默认静音）" aria-label="音乐开关，当前静音">♫</button>
+  <button class="tool" id="topBtn" title="回到顶部" aria-label="回到顶部">↑</button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   JS 分区：
+   1 工具与状态 / 2 粒子引擎 / 3 血契封印 / 4 打字机
+   5 时钟与计数器 / 6 翻转卡 / 7 留言板 / 8 联系方式
+   9 音乐(Web Audio) / 10 杂项
+   ============================================================ */
+(function(){
+'use strict';
+
+/* ---------- 1. 工具与状态 ---------- */
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const RM = window.matchMedia('(prefers-reduced-motion: reduce)');
+const reduce = () => RM.matches;
+
+const gate  = $('#gate');
+const site  = $('#site');
+const toast = $('#toast');
+let toastTimer = null;
+function say(msg){
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toast.classList.remove('show'), 2200);
+}
+/* localStorage 安全读写（隐私模式下不报错） */
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem(k); return v===null?d:v; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+};
+
+/* ---------- 2. 粒子引擎：飘落灰烬 / 鼠标拖尾 / 点击波纹 ---------- */
+const canvas = $('#fx');
+const ctx = canvas.getContext('2d');
+let W=0, H=0, DPR=1;
+let ashes=[], trails=[], bursts=[], rings=[];
+let rafId=null, lastSpawn=0, lastTrail={x:0,y:0};
+
+function resizeCanvas(){
+  DPR = Math.min(window.devicePixelRatio||1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  canvas.width = W*DPR; canvas.height = H*DPR;
+  canvas.style.width = W+'px'; canvas.style.height = H+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener('resize', resizeCanvas, {passive:true});
+resizeCanvas();
+
+const PALETTE = ['#c21a2c','#a6ff3d','#cdf3ff','#8b0000','#b8b2bb','#4a1c55'];
+function rand(a,b){ return a + Math.random()*(b-a); }
+function pick(arr){ return arr[(Math.random()*arr.length)|0]; }
+
+function spawnAsh(){
+  ashes.push({x:rand(0,W), y:-10, vx:rand(-.25,.25), vy:rand(.25,.8),
+              s:rand(1,2.6), life:1, decay:rand(.0012,.003), c:pick(PALETTE)});
+  if(ashes.length>90) ashes.shift();
+}
+function spawnTrail(x,y){
+  trails.push({x,y, vx:rand(-.35,.35), vy:rand(-.9,-.3), life:1, c:pick(PALETTE), s:rand(2,4)});
+  if(trails.length>60) trails.shift();
+}
+function spawnBurst(x,y){
+  if(reduce()) return; /* 减少动效时不累积粒子，只做静态反馈 */
+  rings.push({x,y,r:4,life:1,c:pick(PALETTE)});
+  for(let i=0;i<14;i++){
+    const a=rand(0,Math.PI*2), sp=rand(1.2,4.2);
+    bursts.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,
+                 c:pick(PALETTE),s:rand(2,4.5),rot:rand(0,6)});
+  }
+  if(bursts.length>260) bursts.splice(0,bursts.length-260);
+}
+function draw(now){
+  ctx.clearRect(0,0,W,H);
+  /* 环境：缓慢飘落的灰烬 / 冷星 */
+  if(now-lastSpawn>420){ spawnAsh(); lastSpawn=now; }
+  ashes.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy; p.life-=p.decay;
+    ctx.globalAlpha=Math.max(0,p.life)*.55;
+    ctx.fillStyle=p.c; ctx.fillRect(p.x,p.y,p.s,p.s);
+  });
+  ashes=ashes.filter(p=>p.life>0 && p.y<H+20);
+  /* 鼠标拖尾：小像素十字星 */
+  trails.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy; p.life-=.024;
+    ctx.globalAlpha=Math.max(0,p.life)*.8;
+    ctx.fillStyle=p.c;
+    ctx.fillRect(p.x-p.s/2,p.y-.5,p.s,1);
+    ctx.fillRect(p.x-.5,p.y-p.s/2,1,p.s);
+  });
+  trails=trails.filter(p=>p.life>0);
+  /* 点击爆发粒子 */
+  bursts.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy; p.vy+=.055; p.vx*=.985; p.life-=.022; p.rot+=.08;
+    ctx.globalAlpha=Math.max(0,p.life);
+    ctx.fillStyle=p.c;
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+    ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s); ctx.restore();
+  });
+  bursts=bursts.filter(p=>p.life>0);
+  /* 点击波纹环 */
+  rings.forEach(p=>{
+    p.r+=2.6; p.life-=.028;
+    ctx.globalAlpha=Math.max(0,p.life)*.7;
+    ctx.strokeStyle=p.c; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.stroke();
+  });
+  rings=rings.filter(p=>p.life>0);
+  ctx.globalAlpha=1;
+  rafId=requestAnimationFrame(draw);
+}
+function startFX(){
+  if(rafId===null && !reduce()) rafId=requestAnimationFrame(draw);
+}
+function stopFX(){
+  if(rafId!==null){ cancelAnimationFrame(rafId); rafId=null; }
+  ctx.clearRect(0,0,W,H);
+}
+/* 全局点击：波纹 + 粒子；移动端 pointerdown 同样生效 */
+document.addEventListener('pointerdown', e=>{
+  if(reduce()){
+    /* 减少动效时只画一帧静态反馈，随后清除 */
+    ctx.clearRect(0,0,W,H);
+    ctx.globalAlpha=.7; ctx.strokeStyle='#a6ff3d'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(e.clientX,e.clientY,16,0,Math.PI*2); ctx.stroke();
+    ctx.globalAlpha=1;
+    setTimeout(()=>ctx.clearRect(0,0,W,H),120);
+    return;
+  }
+  spawnBurst(e.clientX,e.clientY);
+}, {passive:true});
+/* 鼠标拖尾（节流：位移超过 14px 才生成） */
+document.addEventListener('pointermove', e=>{
+  if(reduce() || e.pointerType==='touch') return;
+  const dx=e.clientX-lastTrail.x, dy=e.clientY-lastTrail.y;
+  if(dx*dx+dy*dy>196){ spawnTrail(e.clientX,e.clientY); lastTrail={x:e.clientX,y:e.clientY}; }
+}, {passive:true});
+RM.addEventListener('change', ()=>{ if(reduce()) stopFX(); else startFX(); });
+startFX();
+
+/* ---------- 3. 血契封印（开场交互，完成后才能进入主页） ---------- */
+const ORDER=['血','骨','泪'];
+let step=0;
+const runeBtns=$$('.rune');
+const gateMsg=$('#gateMsg');
+const gateProgress=$('#gateProgress');
+const enterBtn=$('#enterBtn');
+
+function resetSeal(msg){
+  step=0;
+  runeBtns.forEach(b=>b.classList.remove('lit'));
+  gateProgress.textContent='0';
+  enterBtn.disabled=true;
+  gateMsg.textContent=msg;
+  gate.classList.add('error');
+  setTimeout(()=>gate.classList.remove('error'),420);
+}
+runeBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    if(step>=3) return;
+    if(btn.dataset.rune===ORDER[step]){
+      btn.classList.add('lit');
+      step++;
+      gateProgress.textContent=String(step);
+      gateMsg.textContent = step===3
+        ? '✞ 三枚符文已烙印 · 锁链崩断 · 结界向你敞开 ✞'
+        : '符文「'+btn.dataset.rune+'」已点亮 · 封印裂开 '+step+'/3';
+      spawnBurst(window.innerWidth/2, window.innerHeight/2);
+      if(step===3){ enterBtn.disabled=false; enterBtn.focus({preventScroll:true}); }
+    }else{
+      resetSeal('✖ 顺序错误，血契重置！请按 血 → 骨 → 泪 重新烙印。');
+    }
+  });
+});
+function unlockSite(){
+  site.removeAttribute('inert');
+  site.setAttribute('aria-hidden','false');
+  site.classList.add('unlocked');
+  startFX();
+  try{ $('#mainTitle').focus({preventScroll:true}); }catch(e){}
+  startTypewriters();
+}
+enterBtn.addEventListener('click', ()=>{
+  if(enterBtn.disabled) return;
+  store.set('ds_unlocked','1');
+  gate.classList.add('breaking');
+  for(let i=0;i<5;i++) setTimeout(()=>spawnBurst(rand(0,W),rand(0,H)), i*90);
+  setTimeout(()=>{ gate.remove(); unlockSite(); }, 820);
+});
+/* 本会话已解锁则跳过开场（页脚可重新上锁） */
+let resealed=false;
+try{ resealed=sessionStorage.getItem('ds_resealed')==='1'; }catch(e){}
+if(store.get('ds_unlocked','0')==='1' && !resealed){
+  gate.remove();
+  site.removeAttribute('inert');
+  site.setAttribute('aria-hidden','false');
+  site.classList.add('unlocked');
+}else{
+  try{ runeBtns[0].focus({preventScroll:true}); }catch(e){}
+}
+
+/* ---------- 4. 打字机（自我介绍 + 页头短句） ---------- */
+const INTRO='你好，陌生人。\n这里是「深渊暗黑霸王龙」的黑色结界。凌晨出没，白天沉睡。\n擅长倾听、陪聊、树洞与游戏。不治愈、不励志、不提供正能量。\n若你也曾在凌晨三点盯着天花板，那我们大概是同类。\n留下你的名字，或者悄悄走开，都行。　✞';
+const HEADER='[ SYSTEM ] 载入伤感中... 载入完毕 · 欢迎来到涐旳黑色结界 ┄';
+let typedStarted=false;
+function typeInto(el, text, speed, done){
+  if(reduce()){ el.textContent=text; if(done) done(); return; }
+  let i=0;
+  (function tick(){
+    el.textContent=text.slice(0,++i);
+    if(i<text.length) setTimeout(tick,speed);
+    else if(done) done();
+  })();
+}
+function startTypewriters(){
+  if(typedStarted) return;
+  typedStarted=true;
+  const intro=$('#introText');
+  typeInto(intro, INTRO, 42, ()=>{
+    const caret=document.createElement('span');
+    caret.className='caret'; caret.setAttribute('aria-hidden','true');
+    intro.appendChild(caret);
+  });
+  const ht=$('#headerType');
+  setTimeout(()=>typeInto(ht, HEADER, 46, ()=>{
+    const c=document.createElement('span');
+    c.className='caret'; c.setAttribute('aria-hidden','true');
+    ht.appendChild(c);
+  }), 220);
+}
+/* 跳过开场时也要启动打字机 */
+if(site.classList.contains('unlocked')) startTypewriters();
+
+/* ---------- 5. 实时时钟 / 访客计数器 ---------- */
+function bjTime(){
+  return new Date().toLocaleTimeString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false});
+}
+function tickClock(){
+  const t=bjTime();
+  $('#liveClock').textContent=t;
+  $('#footClock').textContent=t;
+  const h=new Date().toLocaleString('en-US',{timeZone:'Asia/Shanghai',hour:'numeric',hour12:false});
+  $('#onlineState').textContent = (h>=23||h<7) ? '深夜出没中 · 加价时段' : '白天沉睡中 · 勿扰';
+}
+tickClock(); setInterval(tickClock,1000);
+
+/* 访客计数：localStorage 持久化，按日期统计今日 */
+const total = (parseInt(store.get('ds_visits','0'),10)||0)+1;
+store.set('ds_visits',String(total));
+const todayKey=new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Shanghai'});
+let today=0;
+if(store.get('ds_day','')===todayKey){ today=parseInt(store.get('ds_today','0'),10)||0; }
+today++;
+store.set('ds_day',todayKey); store.set('ds_today',String(today));
+const pad6=String(total).padStart(6,'0');
+$('#digitBox').innerHTML = pad6.split('').map(d=>'<span>'+d+'</span>').join('');
+$('#digitBox').setAttribute('aria-label','访客总数 '+total+' 位');
+$('#visitNo').textContent=total; $('#footVisit').textContent=total;
+$('#todayNo').textContent=today; $('#footToday').textContent=today;
+/* 伪实时在线人数，缓慢波动，制造古早站点感 */
+let online=Math.floor(rand(3,11));
+function renderOnline(){
+  $('#onlineNo').textContent=online; $('#footOnline').textContent=online;
+}
+renderOnline();
+setInterval(()=>{ online=Math.max(1,Math.min(19,online+(Math.random()<.5?-1:1))); renderOnline(); },12000);
+
+/* ---------- 6. 翻转卡：技能 / 所属团 ---------- */
+$$('.flip').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const flipped=card.classList.toggle('is-flipped');
+    card.setAttribute('aria-pressed', String(flipped));
+  });
+});
+
+/* ---------- 7. 留言板（本地假表单，实时插入，textContent 防注入） ---------- */
+const SEED=[
+  {n:'殇·涐', t:'涐好嗳伱旳暗黑芞質…已收藏，天天来踩 (｡•́︿•̀｡)', d:'2008-11-03 02:14'},
+  {n:'℡颓废尐年', t:'站长好酷，已下单 1h 纯文，自己找话题真的好难 T_T', d:'2009-04-17 03:41'},
+  {n:'夜葬', t:'山顶的风好冷。', d:'2026-11-24 01:07'}
+];
+const GB_KEY='ds_gb';
+function loadGB(){
+  try{ const raw=store.get(GB_KEY,'null'); const arr=JSON.parse(raw); return Array.isArray(arr)?arr:SEED.slice(); }
+  catch(e){ return SEED.slice(); }
+}
+let gbData=loadGB();
+function saveGB(){ store.set(GB_KEY, JSON.stringify(gbData.slice(0,30))); }
+function fmtNow(){
+  const d=new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false});
+  return d.replace(/\//g,'-');
+}
+function renderGB(){
+  const list=$('#gbList');
+  list.replaceChildren();
+  gbData.forEach(item=>{
+    const li=document.createElement('li');
+    const who=document.createElement('span'); who.className='who'; who.textContent='✞ '+item.n;
+    const time=document.createElement('span'); time.className='time'; time.textContent=item.d;
+    const txt=document.createElement('div'); txt.className='txt'; txt.textContent=item.t;
+    li.append(time,who,txt); list.appendChild(li);
+  });
+}
+renderGB();
+$('#gbForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name=$('#gbName').value.trim()||'anonymous';
+  const text=$('#gbText').value.trim();
+  if(!text){ say('✖ 空白的血书不予受理，写点什么吧'); $('#gbText').focus(); return; }
+  gbData.unshift({n:name,t:text,d:fmtNow()});
+  if(gbData.length>30) gbData.length=30;
+  saveGB(); renderGB();
+  $('#gbText').value='';
+  say('✞ 血书已刻上墙 · 第 '+gbData.length+' 条痕迹');
+});
+$$('.emo').forEach(b=>b.addEventListener('click',()=>{
+  const ta=$('#gbText');
+  ta.value += b.dataset.emo;
+  ta.focus();
+}));
+
+/* ---------- 8. 联系方式：复制 / 待解锁 ---------- */
+$('#copyWx').addEventListener('click', async ()=>{
+  const v='Boffett00I';
+  try{
+    await navigator.clipboard.writeText(v);
+    say('✞ 微信号已复制：'+v);
+  }catch(e){
+    say('✞ 请手动复制：'+v);
+  }
+});
+$$('.lockbtn').forEach(b=>b.addEventListener('click',()=>{
+  if(b.classList.contains('shake')) return;
+  const origin='***待解锁';
+  b.classList.add('shake');
+  b.textContent='*** 冰封中 · 先下单解冻';
+  say('🔒 此栏已被冰之暗封印，下单后自动解锁');
+  setTimeout(()=>{ b.classList.remove('shake'); b.textContent=origin; },1800);
+}));
+$$('.linkbtn').forEach(b=>b.addEventListener('click',()=>{
+  say('✞ 「'+b.dataset.dead+'」已随 2008 年一起失效 · 互踩成功');
+}));
+
+/* ---------- 9. 音乐开关（Web Audio 生成极简低频氛围音，默认静音） ---------- */
+let actx=null, master=null, oscs=[], musicOn=false;
+function buildDrone(){
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC) return false;
+  actx=new AC();
+  /* master 只做总开关（0 = 彻底静音） */
+  master=actx.createGain(); master.gain.value=0; master.connect(actx.destination);
+  /* trem 接受极慢 LFO 调制，模拟旧电视的呼吸感 */
+  const trem=actx.createGain(); trem.gain.value=0.8; trem.connect(master);
+  [55,82.41,110.5].forEach((f,i)=>{
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.type=i===2?'triangle':'sine'; o.frequency.value=f;
+    g.gain.value=[0.012,0.008,0.004][i];
+    o.connect(g); g.connect(trem); o.start();
+    oscs.push(o);
+  });
+  const lfo=actx.createOscillator(), lg=actx.createGain();
+  lfo.frequency.value=0.12; lg.gain.value=0.15;
+  lfo.connect(lg); lg.connect(trem.gain); lfo.start(); oscs.push(lfo);
+  return true;
+}
+function beep(){
+  if(!actx) return;
+  const o=actx.createOscillator(), g=actx.createGain();
+  o.type='square'; o.frequency.value=660;
+  g.gain.setValueAtTime(0.02,actx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001,actx.currentTime+0.12);
+  o.connect(g); g.connect(actx.destination); o.start(); o.stop(actx.currentTime+0.13);
+}
+$('#musicBtn').addEventListener('click',()=>{
+  if(!musicOn){
+    if(!actx && !buildDrone()){ say('✞ 当前浏览器不支持音效'); return; }
+    if(actx.state==='suspended') actx.resume();
+    master.gain.cancelScheduledValues(actx.currentTime);
+    master.gain.linearRampToValueAtTime(0.9,actx.currentTime+0.8);
+    beep(); musicOn=true;
+    $('#musicBtn').classList.add('on');
+    $('#musicBtn').textContent='♬';
+    $('#musicBtn').setAttribute('aria-pressed','true');
+    $('#musicBtn').setAttribute('aria-label','音乐开关，已开启');
+    say('♬ 已开启：低频结界嗡鸣（非版权音乐，纯合成）');
+  }else{
+    master.gain.cancelScheduledValues(actx.currentTime);
+    master.gain.linearRampToValueAtTime(0,actx.currentTime+0.5);
+    musicOn=false;
+    $('#musicBtn').classList.remove('on');
+    $('#musicBtn').textContent='♫';
+    $('#musicBtn').setAttribute('aria-pressed','false');
+    $('#musicBtn').setAttribute('aria-label','音乐开关，当前静音');
+    say('♫ 已静音');
+  }
+});
+
+/* ---------- 10. 杂项：回顶 / 重新上锁 / 首屏提示 ---------- */
+$('#topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:reduce()?'auto':'smooth'}));
+$('#reselBtn').addEventListener('click',()=>{
+  store.set('ds_unlocked','0');
+  try{ sessionStorage.setItem('ds_resealed','1'); }catch(e){}
+  location.reload();
+});
+setTimeout(()=>{ if(!site.classList.contains('unlocked')) return; say('☠ 欢迎回来 · 血契已生效'); },1400);
+
+})();
+</script>
+</body>
+</html>
